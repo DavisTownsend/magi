@@ -10,6 +10,7 @@ setup(name='forecast',
       classifiers=[
         'Development Status :: 1 - Alpha',
         'License :: MIT License',
+        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Topic :: Time Series Analysis :: Forecasting',
       ],
