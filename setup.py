@@ -17,6 +17,6 @@ setup(name='forecast',
       keywords='time series analysis forecast forecasting predict model parallel',
       license='MIT',
       packages=['forecast'],
-      install_requires=['dask','distributed','rpy2','pystan','fbprophet','plotly']
+      install_requires=['dask','distributed','pystan','rpy2','fbprophet','plotly']
       ,
       zip_safe=False)
