@@ -1,3 +1,13 @@
+import pandas as pd
+from rpy2.robjects.packages import importr
+#get ts object as python object
+from rpy2.robjects import pandas2ri
+import rpy2.robjects as robjects
+ts=robjects.r('ts')
+#import forecast package
+forecast=importr('forecast')
+
+
 def forecast_R(time_series,model=x,forecast_periods=18, freq=12,confidence_level=80.0,return_interval=False):
     
     """forecasts a time series object using R models in forecast package (https://www.rdocumentation.org/packages/forecast/versions/8.1)
