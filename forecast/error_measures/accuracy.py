@@ -41,7 +41,7 @@ def accuracy(actual,predicted):
     ThielsU = theil_u_statistic(actual,predicted)
     ACF1 = autocorrelation_lag_1(actual,predicted)
     
-    print(tabulate([sorted([MAPE,SMAPE,ME,MAE,MSE,RMSE,ThielsU,ACF1])], headers=sorted(['MAPE','SMAPE','ME','MAE','MSE','RMSE','ThielsU','ACF1'])))
+    print(tabulate([[MAPE,SMAPE,ME,MAE,MSE,RMSE,ThielsU,ACF1]], headers=['MAPE','SMAPE','ME','MAE','MSE','RMSE','ThielsU','ACF1']))
     
     accuracy_dict = {'MAPE':MAPE,'SMAPE':SMAPE,'ME':ME,'MAE':MAE,'MSE':MSE,'RMSE':RMSE,'ThielsU':ThielsU,'ACF1':ACF1}
     
