@@ -259,6 +259,9 @@ class forecast(object):
             pred: returns dataframe of predicted values only
             fit: returns dataframe of fitted values only
             residuals: returns dataframe of residual values only
+            
+        Returns:
+            forecast_df: dataframe of time series outcome based on the boolean checks
 
         """
         if time_series is None:
