@@ -25,11 +25,16 @@ class forecast(object):
         regressors: boolean check if x regressor will be passed into one of the models
         
     Methods:
+        prophet: wrapper for prophet_series and prophet_dataframe
+        prophet_series: function to forecast single time series using Prophet
+        prophet_dataframe: function to forecast multiple time series using Prophet
         R: wrapper for R_series and R_dataframe
         R_series: function to forecast single time series in R
         R_dataframe: function to forecast multiple time series in R
-        prophet: method for forecasting using prophet
-        
+        tsclean: wrapper around tsclean_series and tsclean_dataframe
+        tsclean_series: cleans single time series using tsclean
+        tsclean_dataframe: cleans dataframe of time series
+   
     Examples:
     
     
@@ -440,3 +445,99 @@ class forecast(object):
         forecast_df = pd.concat(total,ignore_index=False,keys=time_series.columns,axis=1)
         
         return forecast_df
+    
+    def tsclean(self, time_series=None):
+        
+        """wraps tsclean_series and tsclean_daatframe methods to clean time series
+            
+        Args:
+            time_series: pass in time series or dataframe or series to be cleaned
+
+        Returns:
+             series: if series passed in, returns cleaned series
+             dataframe: if dataframe passed in, cleaned dataframe returned
+        
+        """
+        if time_series is None:
+            time_series = self.time_series
+            
+        if self.forecast_type == 1:
+            return self.tsclean_series(time_series=time_series)
+        
+        if self.forecast_type == 2:
+            return self.tsclean_dataframe(time_series=time_series)
+    
+    def tsclean_series(time_series=None,freq=None,replace_missing=True):
+        """
+        Uses R tsclean function to identify and replace outliers and missing values
+        https://www.rdocumentation.org/packages/forecast/versions/7.1/topics/tsclean
+
+        Args:
+            time_series: input time series
+            freq: frequency of time series
+            replace_missing: if True, not only removes outliers but also interpolates missing values
+
+        Returns
+            cleaned_time_series: outputs cleaned time series
+        """
+        if time_series is None:
+            time_series = self.time_series
+        if freq is None:
+            freq = self.frequency
+
+        freq_string = self.freq_dict[freq]
+
+        #find the start of the time series
+        start_ts = time_series[time_series.notna()].index[0]
+        #find the end of the time series
+        end_ts = time_series[time_series.notna()].index[-1]
+        #extract actual time series
+        time_series = time_series.loc[start_ts:end_ts]
+        #converts to ts object in R
+        time_series_R = robjects.IntVector(time_series)
+        rdata=ts(time_series_R,frequency=freq)
+
+        if replace_missing:
+            R_val = 'TRUE'
+        else:
+            R_val = 'FALSE'
+
+        rstring="""
+             function(rdata){
+             library(forecast)
+             x <- tsclean(rdata,replace.missing=%s)
+             return(x)
+             }
+            """ % (R_val)
+
+
+        rfunc=robjects.r(rstring)
+        cleaned_int_vec = rfunc(rdata)
+        cleaned_array = pandas2ri.ri2py(cleaned_int_vec)
+        cleaned_ts = pd.Series(cleaned_array,index=pd.date_range(start=time_series[time_series.notnull()].index.min(),periods=len(time_series[time_series.notnull()]),freq=freq_string))
+        return cleaned_ts
+    
+    def tsclean_dataframe(self,
+                          time_series=None):
+    
+        
+        """cleans dataframe using tsclean
+
+        Args:
+            time_series: input dataframe
+        Returns:
+            cleaned_df: dataframe of cleaned time series
+
+        """
+        if time_series is None:
+            time_series = self.time_series
+            
+        output_series = []
+        for i in time_series:
+            cleaned_series = dask.delayed(self.tsclean_series)(time_series[i])
+            output_series.append(cleaned_series)
+            
+        total = dask.delayed(output_series).compute()
+        cleaned_df = pd.concat(total,ignore_index=False,keys=time_series.columns,axis=1)
+        
+        return cleaned_df
