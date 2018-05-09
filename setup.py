@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='forecast',
-      version=0.0.1,
+      version='0.0.1',
       description='high level forecast library for python',
       long_description='This package is provides a python wrapper around other time series analysis libraries such as the forecast package in R and the Prophet library. This new layer of abstraction makes it very simple to put many different types of univariate time series models into production by using Dask as the parallelization layer',
       url='http://github.com/DavisTownsend/forecast',
