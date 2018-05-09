@@ -55,23 +55,24 @@ class forecast(object):
     fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
     forecast_dic = fc_obj.R(model='snaive')
     
-    Forecasting Using R Multiple Series
+    Forecasting Using R and cleaning series before forecasting
+    
+    fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.tsclean().R(model='auto.arima(rdata,D=1,stationary=TRUE)')
+    
+    Forecasting Using R Multiple Series, return fitted values in df
     
     fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
-    forecast_dic = fc_obj.R(model='auto.arima(rdata,D=1,stationary=TRUE)')
+    forecast_df = fc_obj.R(model='auto.arima(rdata,D=1,stationary=TRUE)',fit=True)
     
-    Forecasting Using R Multiple Series in parallel
+    Forecasting Using R Multiple Series, clean ts before forecast, all done in parallel, return fitted + predicted values in df
     
     from dask.distributed import Client, LocalCluster
     cluster = LocalCluster()
     client = Client(cluster)
     fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
-    forecast_dic = fc_obj.R(model='auto.arima(rdata,D=1,stationary=TRUE)')
-    
-    Forecasting Using R and cleaning series before forecasting
-    
-    fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
-    forecast_dic = fc_obj.tsclean().R(model='auto.arima(rdata,D=1,stationary=TRUE)')
+    forecast_dic = fc_obj.tsclean().R(model='auto.arima(rdata,D=1,stationary=TRUE)',fit_pred=True)
+
     ---------------------------------------------------------------------------------------------------------------------------
     Forecasting using Prophet
     
@@ -88,18 +89,18 @@ class forecast(object):
     fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
     forecast_dic = fc_obj.prophet()
     
-    Forecasting using Prophet and cleaning time series before forecast
+    Forecasting using Prophet and cleaning time series before forecast, then returning residuals
     
     fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
-    forecast_dic = fc_obj.tsclean().prophet(changepoint_prior_scale=.25)
+    forecast_dic = fc_obj.tsclean().prophet(changepoint_prior_scale=.25,residuals=True)
     
-    Forecasting using Prophet and cleaning time series before forecast all done in parallel
+    Forecasting using Prophet and cleaning time series before forecast all done in parallel, returning df of actuals + predicted values
     
     from dask.distributed import Client, LocalCluster
     cluster = LocalCluster()
     client = Client(cluster)
     fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
-    forecast_dic = fc_obj.tsclean().prophet(changepoint_prior_scale=.25)
+    forecast_dic = fc_obj.tsclean().prophet(changepoint_prior_scale=.25,actual_pred=True)
     """
 
     
