@@ -448,7 +448,7 @@ class forecast(object):
     
     def tsclean(self, time_series=None):
         
-        """wraps tsclean_series and tsclean_daatframe methods to clean time series
+        """wraps tsclean_series and tsclean_dataframe methods to clean time series
             
         Args:
             time_series: pass in time series or dataframe or series to be cleaned
@@ -466,8 +466,8 @@ class forecast(object):
         
         if self.forecast_type == 2:
             return self.tsclean_dataframe(time_series=time_series)
-    
-    def tsclean_series(time_series=None,freq=None,replace_missing=True):
+
+    def tsclean_series(self,time_series=None,freq=None,replace_missing=True,return_ts=False):
         """
         Uses R tsclean function to identify and replace outliers and missing values
         https://www.rdocumentation.org/packages/forecast/versions/7.1/topics/tsclean
@@ -476,6 +476,7 @@ class forecast(object):
             time_series: input time series
             freq: frequency of time series
             replace_missing: if True, not only removes outliers but also interpolates missing values
+            return_ts: boolean check, if True will return time series instead of class object (used for tsclean_dataframe calls)
 
         Returns
             cleaned_time_series: outputs cleaned time series
@@ -515,7 +516,13 @@ class forecast(object):
         cleaned_int_vec = rfunc(rdata)
         cleaned_array = pandas2ri.ri2py(cleaned_int_vec)
         cleaned_ts = pd.Series(cleaned_array,index=pd.date_range(start=time_series[time_series.notnull()].index.min(),periods=len(time_series[time_series.notnull()]),freq=freq_string))
-        return cleaned_ts
+        #if return_ts set to True then return time series (for tsclean_dataframe calls where want the series and not the object, 
+        #else return mutated class object (new class object)
+        if return_ts:
+            return cleaned_ts
+        else:
+            self.time_series = cleaned_ts
+            return self
     
     def tsclean_dataframe(self,
                           time_series=None):
@@ -534,10 +541,10 @@ class forecast(object):
             
         output_series = []
         for i in time_series:
-            cleaned_series = dask.delayed(self.tsclean_series)(time_series[i])
+            cleaned_series = dask.delayed(self.tsclean_series)(time_series[i],return_ts=True)
             output_series.append(cleaned_series)
             
         total = dask.delayed(output_series).compute()
         cleaned_df = pd.concat(total,ignore_index=False,keys=time_series.columns,axis=1)
-        
-        return cleaned_df
+        self.time_series = cleaned_df
+        return self
