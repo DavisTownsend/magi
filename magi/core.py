@@ -42,7 +42,7 @@ class forecast(object):
     Forecasting Using R
     
     #generate dataframe of time series
-    df = generate_ts()
+    df = gen_ts()
     
     Forecasting Using R Single Series
     
