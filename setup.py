@@ -9,10 +9,9 @@ setup(name='forecast',
       author_email='dtownsend@ea.com',
       classifiers=[
             'Development Status :: 2 - Pre-Alpha',
-            'License :: MIT License',
+            'License :: OSI Approved :: MIT License',
             'Programming Language :: Python :: 3.5',
-            'Programming Language :: Python :: 3.6',
-            'Topic :: Time Series Analysis :: Forecasting'
+            'Programming Language :: Python :: 3.6'
       ],
       keywords='time series analysis forecast forecasting predict model parallel',
       license='MIT',
