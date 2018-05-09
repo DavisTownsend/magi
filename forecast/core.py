@@ -1,17 +1,15 @@
-import pandas as pd
-import numpy as np
-
 from rpy2.robjects.packages import importr
 #get ts object as python object
 from rpy2.robjects import pandas2ri
 import rpy2.robjects as robjects
 ts=robjects.r('ts')
 #import forecast package
-
 forecast=importr('forecast')
-from dask.distributed import Client, LocalCluster
-import dask
+
+import pandas as pd
+import numpy as np
 from fbprophet import Prophet
+import logging
 
 class forecast(object):
     
@@ -74,6 +72,162 @@ class forecast(object):
                 raise TypeError('your forecast object must either be a pandas series or dataframe')
         except TypeError:
             print('your forecast object must either be a pandas series or dataframe')
+            
+        #turn off prophet warnings
+        logging.getLogger('fbprophet').setLevel(logging.WARNING)
+        
+    def prophet(self,
+                changepoint_prior_scale=.35,
+                fit_pred=True,
+                actual_pred=False,
+                pred=False,
+                fit=False,
+                residuals=False):
+        
+        """wraps prophet-series and prophet_dataframe methods to forecast
+        forecasting for single series returns a dictionary
+        forecasting for dataframe returns back dataframe of predictions
+            -can alter parameters to also return fitted values
+
+        Args:
+            -----Only relevant for dataframes below------
+            fit_pred: returns dataframe of fitted and predicted values
+            actual_pred: returns dataframe of actual and predicted values
+            pred: returns dataframe of predicted values only
+            fit: returns dataframe of fitted values only
+            residuals: returns dataframe of residual values only
+
+        Returns:
+             series: if series passed in, returns dict of parameters of forecast object
+             dataframe: if dataframe passed in, dataframe of predictions and optionally fitted values is returned
+
+        """
+        #this does single series forecast and returns dictionary
+        if self.forecast_type == 1:
+            return self.prophet_series()
+
+        if self.forecast_type == 2:
+            return self.prophet_dataframe(fit_pred=fit_pred,
+                                    actual_pred=actual_pred,
+                                    pred=pred,
+                                    fit=fit,
+                                    residuals=residuals
+                                   )
+        
+    def prophet_series(self,
+                       time_series=None,
+                       forecast_periods=None,
+                       changepoint_prior_scale=.35,
+                       freq=None):
+    
+        """forecasts a time series object using Prophet package (https://facebook.github.io/prophet/)
+        Note: This function assumes you have already cleaned time series of nulls and have the time series indexed correctly
+
+
+            Args:
+                time_series: time series object
+                forecast_periods: periods to forecast for
+                changepoint_prior_scale: flexibility in model to change trendpoint, lower values make it more flexible
+                freq: frequency of time series (MS is month start)
+            Returns:
+                 model: prophet model object
+                 method: prophet
+                 predicted: Point forecasts as a time series
+                 lower: Lower limits for prediction intervals
+                 upper: Upper limits for prediction intervals
+                 level: The confidence values associated with the prediction intervals (does not apply here but used for plotting)
+                 x: The original time series
+                 residuals: Residuals from the fitted model. That is x minus fitted values.
+                 fitted: Fitted values (one-step forecasts)
+                 full_fit: fitted + predicted values as one time series
+                 full_actual: actual + predicted values as one time series
+                 forecast_df: dataframe returned for prophet forecast
+
+        """
+        if time_series is None:
+            time_series = self.time_series
+        if forecast_periods is None:
+            forecast_periods = self.forecast_periods
+        if freq is None:
+            freq = self.freq_dict[self.frequency]
+            
+        #find the start of the time series
+        start_ts = time_series[time_series.notna()].index[0]
+        #find the end of the time series
+        end_ts = time_series[time_series.notna()].index[-1]
+        #extract actual time series
+        time_series = time_series.loc[start_ts:end_ts]
+
+        model_ts = time_series.reset_index()
+        model_ts.columns = ['ds', 'y']
+
+        model = Prophet(changepoint_prior_scale=changepoint_prior_scale)
+        model.fit(model_ts)
+
+        future = model.make_future_dataframe(periods=forecast_periods, freq=freq)
+        forecast_df_og = model.predict(future)
+        forecast_df = forecast_df_og.set_index('ds')
+
+        return {'model':model,
+                'method':'prophet',
+                'predicted':forecast_df['yhat'][-forecast_periods:],
+                'lower':forecast_df['yhat_lower'][-forecast_periods:].values,
+                'upper':forecast_df['yhat_upper'][-forecast_periods:].values,
+                'level':80.0,
+                'x':time_series,
+                'residuals':time_series-forecast_df['yhat'][:-forecast_periods],
+                'fitted':forecast_df['yhat'][:-forecast_periods],
+                'full_fit':forecast_df['yhat'],
+                'full_actuals':time_series.append(forecast_df['yhat'][-forecast_periods:]),
+                'forecast_df':forecast_df_og
+               }
+    
+    def prophet_dataframe(self,
+                    time_series=None,
+                    fit_pred = True,
+                    actual_pred=False,
+                    pred=False,
+                    fit=False,
+                    residuals=False):
+    
+        
+        """forecasts a dataframe of time series using Prophet
+        -This function assumes you have already cleaned time series of nulls and have the time series indexed correctly
+
+        Args:
+            time_series: input dataframe
+            ----- only one of below boolean values can be set to true -----
+            fit_pred: returns dataframe of fitted and predicted values
+            actual_pred: returns dataframe of actual and predicted values
+            pred: returns dataframe of predicted values only
+            fit: returns dataframe of fitted values only
+            residuals: returns dataframe of residual values only
+
+        """
+        if time_series is None:
+            time_series = self.time_series
+            
+        output_series = []
+        for i in time_series:
+            forecasted_dict = dask.delayed(self.prophet_series)(time_series[i])
+            #returns correct series object from R_series method based on input param
+            if fit_pred:
+                forecasted_series = forecasted_dict['full_fit']
+            if actual_pred:
+                forecasted_series = forecasted_dict['full_actuals']
+            if pred:
+                forecasted_series = forecasted_dict['predicted']
+            if fit:
+                forecasted_series = forecasted_dict['fitted']
+            if residuals:
+                forecasted_series = forecasted_dict['residuals']
+                
+            output_series.append(forecasted_series)
+            
+        total = dask.delayed(output_series).compute()
+        forecast_df = pd.concat(total,ignore_index=False,keys=time_series.columns,axis=1)
+        
+        return forecast_df
     
     def R(self,
           model,
@@ -81,7 +235,7 @@ class forecast(object):
           actual_pred=False,
           pred=False,
           fit=False,
-          residuals=False,):
+          residuals=False):
         """wraps R_series and R_dataframe methods to forecast
         forecasting for single series returns a dictionary
         forecasting for dataframe returns back dataframe of predictions
@@ -259,9 +413,6 @@ class forecast(object):
             pred: returns dataframe of predicted values only
             fit: returns dataframe of fitted values only
             residuals: returns dataframe of residual values only
-            
-        Returns:
-            forecast_df: dataframe of time series outcome based on the boolean checks
 
         """
         if time_series is None:
