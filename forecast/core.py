@@ -1,6 +1,7 @@
 from rpy2.robjects.packages import importr
 #get ts object as python object
 from rpy2.robjects import pandas2ri
+pandas2ri.activate()
 import rpy2.robjects as robjects
 ts=robjects.r('ts')
 #import forecast package
