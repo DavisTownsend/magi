@@ -39,12 +39,67 @@ class forecast(object):
     
     
     ---------------------------------------------------------------------------------------------------------------------------
-        
+    Forecasting Using R
     
-
-    Notes:
+    #generate dataframe of time series
+    df = generate_ts()
     
-
+    Forecasting Using R Single Series
+    
+    fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.R(model='auto.arima(rdata,D=1,stationary=TRUE)')
+    
+    fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.R(model='thetaf')
+    
+    fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.R(model='snaive')
+    
+    Forecasting Using R Multiple Series
+    
+    fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.R(model='auto.arima(rdata,D=1,stationary=TRUE)')
+    
+    Forecasting Using R Multiple Series in parallel
+    
+    from dask.distributed import Client, LocalCluster
+    cluster = LocalCluster()
+    client = Client(cluster)
+    fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.R(model='auto.arima(rdata,D=1,stationary=TRUE)')
+    
+    Forecasting Using R and cleaning series before forecasting
+    
+    fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.tsclean().R(model='auto.arima(rdata,D=1,stationary=TRUE)')
+    ---------------------------------------------------------------------------------------------------------------------------
+    Forecasting using Prophet
+    
+    Forecasting using Prophet single series
+    
+    fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.prophet()
+    
+    fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.prophet(changepoint_prior_scale=.25)
+    
+    Forecasting using Prophet Multiple Series
+    
+    fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.prophet()
+    
+    Forecasting using Prophet and cleaning time series before forecast
+    
+    fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.tsclean().prophet(changepoint_prior_scale=.25)
+    
+    Forecasting using Prophet and cleaning time series before forecast all done in parallel
+    
+    from dask.distributed import Client, LocalCluster
+    cluster = LocalCluster()
+    client = Client(cluster)
+    fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
+    forecast_dic = fc_obj.tsclean().prophet(changepoint_prior_scale=.25)
     """
 
     
