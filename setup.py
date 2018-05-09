@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='forecast',
-      version='0.1',
+      version=1.0.0.a1, # Alpha release
       description='high level forecast library for python',
       long_description='This package is intended to be a high level wrapper around other time series analysis libaries in python and R. The intention is to replicate the ease of use functionality of the forecast package in R but in python',
       url='http://github.com/DavisTownsend/forecastt',
