@@ -1,9 +1,13 @@
-.. image:: https://readthedocs.org/projects/magi-docs/badge/?version=latest
-   :target: https://magi-docs.readthedocs.io
-   
 .. image:: https://img.shields.io/pypi/v/magi.svg
    :target: https://pypi.python.org/pypi/magi
    :alt: Pypi Version
+
+.. image:: https://readthedocs.org/projects/magi-docs/badge/?version=latest
+   :target: https://magi-docs.readthedocs.io
+   
+.. image:: https://img.shields.io/pypi/l/magi.svg
+   :target: https://pypi.python.org/pypi/magi/
+   :alt: License
 
 
 Overview
