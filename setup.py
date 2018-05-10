@@ -18,4 +18,6 @@ setup(name='magi',
       packages=['magi'],
       python_requires='~=3.5',
       install_requires=['numpy','pandas','dask','distributed','pystan','rpy2','fbprophet','plotly','cufflinks'],
+      setup_requires=['pytest-runner'],
+      tests_require=['pytest'],
       zip_safe=False)
