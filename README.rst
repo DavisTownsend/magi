@@ -1,3 +1,7 @@
+========
+ magi
+========
+
 .. image:: https://img.shields.io/pypi/v/magi.svg
    :target: https://pypi.python.org/pypi/magi
    :alt: Pypi Version
@@ -14,7 +18,7 @@
 
 
 Overview
-========
+============
 
 `magi` is intended to be a high level python wrapper around other time series forecasting libraries to allow easily parallelized univariate time series forecasting in python. In particular, the library current supports wrappers around the 
 R `forecast <https://www.rdocumentation.org/packages/forecast/versions/8.3>`_ library and 
@@ -22,7 +26,15 @@ facebook's `prophet <https://github.com/facebook/prophet>`_ package
 
 
 Basic Usage
-===========
+============
+
+Use Cases
+============
+What this package should be used for
+-----------
+
+What this package should NOT be used for
+-----------
 
 Dependencies
 ============
@@ -43,6 +55,6 @@ Installation
 
 
 Documentation
-=============
+============
 
 Documentation is hosted on `Read the Docs <http://magi-docs.readthedocs.io/en/latest/index.html>`_.
