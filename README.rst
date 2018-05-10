@@ -66,3 +66,7 @@ Documentation
 ============
 
 Documentation is hosted on `Read the Docs <http://magi-docs.readthedocs.io/en/latest/index.html>`_.
+
+Disclaimer
+============
+This package is still very early in development and should not be relied upon in production. Everything is still subject to change
