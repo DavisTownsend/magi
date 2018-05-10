@@ -17,5 +17,5 @@ setup(name='magi',
       license='MIT',
       packages=['magi'],
       python_requires='~=3.5',
-      install_requires=['dask','distributed','pystan','rpy2','fbprophet','plotly'],
+      install_requires=['numpy','pandas','dask','distributed','pystan','rpy2','fbprophet','plotly','cufflinks'],
       zip_safe=False)
