@@ -2,10 +2,6 @@
  magi
 ========
 
-.. image:: https://badges.gitter.im/magi-gitter/Lobby.svg
-   :alt: Join the chat at https://gitter.im/magi-gitter/Lobby
-   :target: https://gitter.im/magi-gitter/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-
 .. image:: https://img.shields.io/pypi/v/magi.svg
    :target: https://pypi.python.org/pypi/magi
    :alt: Pypi Version
@@ -19,6 +15,10 @@
 .. image:: https://img.shields.io/pypi/l/magi.svg
    :target: https://pypi.python.org/pypi/magi/
    :alt: License
+   
+.. image:: https://badges.gitter.im/magi-gitter/Lobby.svg
+   :alt: Join the chat at https://gitter.im/magi-gitter/Lobby
+   :target: https://gitter.im/magi-gitter/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
 
 Overview
