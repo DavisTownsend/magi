@@ -1,14 +1,11 @@
-Long Term
+May-September 2018
 * Refactor codebase to make function/class calls more easy and intuitive
-
-May 2018
-* Write unit tests
 * Create rolling origin cross validation function
-* Implement Continuous Integration
-
-July/July 2018
-* Write wrapper for pylux
+* Write wrapper for pyflux
 * Write wrapper for statsmodels
+* add x regressor functionality
 
-August 2018
-* Implement Continuous Integration
+September-December 2018
+* Write unit test
+* implement continuous integration with Travis
+* implement code coverage using https://codecov.io/
