@@ -13,6 +13,15 @@ facebook's `prophet <https://github.com/facebook/prophet>`_ package
 Basic Usage
 ===========
 
+Dependencies
+============
+* dask
+* distributed
+* plotly
+* cufflinks
+* rpy2 (& forecast package >=6.3 installed in R)
+* fbprophet
+
 
 Installation
 ============
