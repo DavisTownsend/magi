@@ -1,4 +1,4 @@
-.. image:: https://readthedocs.org/projects/magi/badge/?version=latest
+.. image:: https://readthedocs.org/projects/magi-docs/badge/?version=latest
    :target: https://magi-docs.readthedocs.io
 
 
