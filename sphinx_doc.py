@@ -1,3 +1,3 @@
 __name__ = 'magi'
 __author__ = 'Davis Townsend'
-__version__ = '0.0.6'
+__version__ = '0.0.7'
