@@ -7,7 +7,7 @@ with open('README.rst') as readme:
 
 setup(name='magi',
       version=sphinx_doc.__version__,
-      description='parallelized univariate time series forecasting library for python',
+      description='high level wrapper for parallel univariate time series forecasting',
       long_description=readme,
       url='http://github.com/DavisTownsend/forecast',
       author= sphinx_doc.__author__,
