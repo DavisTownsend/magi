@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+
 def gen_ts(freq='MS',ncols=5,nrows=24,num_range=[0,10000],end_date='2018-04-01'):
     colnames = []
     for i in range(ncols):
