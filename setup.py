@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import sphinx_doc
 
 from setuptools import setup
@@ -24,4 +25,5 @@ setup(name='magi',
       python_requires='~=3.5',
       install_requires=['numpy','pandas','dask','distributed','pystan','rpy2','fbprophet','plotly','cufflinks'],
       setup_requires=['pytest-runner'],
-      tests_require=['pytest'])
+      tests_require=['pytest'],
+     )
