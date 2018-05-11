@@ -363,7 +363,7 @@ class forecast(object):
             freq: frequency of time series (12 is monthly)
 
         Returns following parameters as a dict:
-             model: A list containing information about the fitted model
+             model: A dictionary containing information about the fitted model
              method:method name
              predicted:Point forecasts as a time series
              lower: Lower limits for prediction intervals
@@ -432,7 +432,8 @@ class forecast(object):
         rfunc=robjects.r(rstring)
         #gets fitted and predicted series, and lower and upper prediction intervals from R model
         model,method,mean,lower,upper,level,x,residuals,fitted=rfunc(rdata)
-        method=pandas2ri.ri2py(model)
+        model = dict(zip(model.names, map(list,list(model))))
+        method=pandas2ri.ri2py(method)
         mean=pandas2ri.ri2py(mean)
         lower=pandas2ri.ri2py(lower).ravel()
         upper=pandas2ri.ri2py(upper).ravel()
