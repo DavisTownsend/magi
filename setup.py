@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 import sphinx_doc
 
-from setuptools import setup
+import setuptools
 
 with open('README.rst') as readme:
     long_description = readme.read()
 
-setup(name='magi',
+setuptools.setup(name='magi',
       version=sphinx_doc.__version__,
       description='high level wrapper for parallel univariate time series forecasting',
       long_description=readme,
