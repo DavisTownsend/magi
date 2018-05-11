@@ -11,7 +11,7 @@ init_notebook_mode(connected=False)
 import cufflinks as cf
 cf.set_config_file(offline=True, world_readable=False,offline_show_link=False,theme='pearl')
 
-def tsplot(obj,title='',xTitle='Date',yTitle='',asFigure=False):
+def fc_plot(obj,title='',xTitle='Date',yTitle='',asFigure=False):
     """Plots actual, fitted, and predicted values from forecast class in plotly graph
     Args:
         obj: forecast object (dict for single series and dataframe for multiple series)
