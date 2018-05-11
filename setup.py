@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 import sphinx_doc
-
+import sys
+from os.path import exists
 import setuptools
-
-with open('README.rst') as readme:
-    long_description = readme.read()
 
 setuptools.setup(name='magi',
       version=sphinx_doc.__version__,
       description='high level wrapper for parallel univariate time series forecasting',
-      long_description=readme,
+      long_description=open('README.rst').read() if exists('README.rst') else '',
       url='http://github.com/DavisTownsend/forecast',
       author= sphinx_doc.__author__,
       author_email='dtownsend@ea.com',
