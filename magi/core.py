@@ -10,6 +10,8 @@ try:
     forecast=importr('forecast')
 except:
     #if forecast package doesnt load then need to install forecast package first
+    importr("utils")
+    utils = importr('utils')
     packnames = ('ggplot2','forecast')
     from rpy2.robjects.vectors import StrVector
     utils.install_packages(StrVector(packnames))
