@@ -37,7 +37,7 @@ Use Cases
 
 What this package should be used for
 ------------
-* 1 or more Univariate Time Series forecasting
+* forecasting for 1 or more Univariate Time Series
 * forecasting using many different time series models in parallel with minimal effort
 * wrapper for R forecast library to implement those models in python workflow
 * wrapper around Prophet library to provide easier data framework to work with
