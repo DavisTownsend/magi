@@ -54,7 +54,7 @@ Dependencies
 * distributed
 * plotly
 * cufflinks
-* rpy2 (& forecast package >=6.3 installed in R)
+* rpy2 (& forecast package >=8.3 installed in R)
 * fbprophet
 
 
