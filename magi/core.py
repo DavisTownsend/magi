@@ -21,6 +21,7 @@ import pandas as pd
 import numpy as np
 from fbprophet import Prophet
 import logging
+import dask
 
 class forecast(object):
     
