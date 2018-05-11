@@ -4,8 +4,16 @@ from rpy2.robjects import pandas2ri
 pandas2ri.activate()
 import rpy2.robjects as robjects
 ts=robjects.r('ts')
-#import forecast package
-forecast=importr('forecast')
+
+#installs forecast package
+try:
+    forecast=importr('forecast')
+except:
+    #if forecast package doesnt load then need to install forecast package first
+    packnames = ('ggplot2','forecast')
+    from rpy2.robjects.vectors import StrVector
+    utils.install_packages(StrVector(packnames))
+    forecast=importr('forecast')
 
 import pandas as pd
 import numpy as np
