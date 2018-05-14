@@ -24,13 +24,38 @@
 Overview
 ============
 
-`magi` is intended to be a high level python wrapper around other time series forecasting libraries to allow easily parallelized univariate time series forecasting in python. In particular, the library current supports wrappers around the 
+`magi` is intended to be a high level python wrapper around other time series forecasting libraries to allow easily parallelized univariate time series forecasting in python by using dask delayed wrapper functions under the hood. In particular, the library current supports wrappers to
 R `forecast <https://www.rdocumentation.org/packages/forecast/versions/8.3>`_ library and 
 facebook's `prophet <https://github.com/facebook/prophet>`_ package
 
 
-Basic Usage
+Usage
 ============
+
+This is how easy it is to clean, forecast, and then plot accuracy metrics for 100 time seres using the auto arima model from R forecast package
+
+Importing libraries, generate dataframe of series for example, and start local dask cluster
+
+.. code-block:: python
+
+   >>> from magi.core import forecast
+   >>> from magi.plotting import fc_plot, acc_plot
+   >>> from magi.utils import gen_ts
+   >>> from magi.accuracy import accuracy
+   >>> from dask.distributed import Client, LocalCluster
+   >>> import dask
+   >>> cluster = LocalCluster()
+   >>> client = Client(cluster)
+   >>> df = gen_ts()
+   
+cleaning and forecasting for 100 series in parallel, then calculate and plot accuracy metrics by series
+   
+.. code-block:: python
+
+   >>> fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
+   >>> forecast_df = fc_obj.R(model='auto.arima(rdata,D=1,stationary=TRUE)',fitted=True)
+   >>> acc_df = accuracy(df,forecast_df,separate_series=True)
+   >>> acc_plot(acc_df)
 
 Use Cases
 ============
