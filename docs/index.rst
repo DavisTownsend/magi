@@ -12,7 +12,6 @@ Welcome to magi's documentation!
    
    Quickstart
    Installation
-   Use Cases
    Basic Usage
 
 
