@@ -11,10 +11,13 @@ RUN pip install pip --upgrade
 #enable condaforge channel
 RUN conda config --add channels conda-forge
 #install packages
+RUN conda install rpy2
 RUN conda install pystan
 RUN conda install fbprophet
 RUN conda install plotly
 RUN conda install cufflinks
+RUN conda install dask
+RUN conda install dask distributed
 #install requirements file
 #RUN pip install --requirement /tmp/requirements.txt
 #COPY . /tmp/
