@@ -46,7 +46,7 @@ Importing libraries, generate dataframe of series for example, and start local d
    >>> import dask
    >>> cluster = LocalCluster()
    >>> client = Client(cluster)
-   >>> df = gen_ts()
+   >>> df = gen_ts(ncols=100)
    
 cleaning and forecasting for 100 series in parallel, then calculate and plot accuracy metrics by series
    
