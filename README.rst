@@ -24,7 +24,7 @@
 Overview
 ============
 
-`magi` is intended to be a high level python wrapper around other time series forecasting libraries to allow easily parallelized univariate time series forecasting in python by using dask delayed wrapper functions under the hood. In particular, the library current supports wrappers to R `forecast <https://www.rdocumentation.org/packages/forecast/versions/8.3>`_ library and facebook's `prophet <https://github.com/facebook/prophet>`_ package
+`magi` is a high level python wrapper around other time series forecasting libraries to allow easily parallelized univariate time series forecasting in python by using dask delayed wrapper functions under the hood. In particular, the library currently supports wrappers to R `forecast <https://www.rdocumentation.org/packages/forecast/versions/8.3>`_ library and facebook's `prophet <https://github.com/facebook/prophet>`_ package
 
 
 Usage
