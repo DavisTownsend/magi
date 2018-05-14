@@ -38,24 +38,24 @@ Importing libraries, generate dataframe of series for example, and start local d
 
 .. code-block:: python
 
-   >>> from magi.core import forecast
-   >>> from magi.plotting import fc_plot, acc_plot
-   >>> from magi.utils import gen_ts
-   >>> from magi.accuracy import accuracy
-   >>> from dask.distributed import Client, LocalCluster
-   >>> import dask
-   >>> cluster = LocalCluster()
-   >>> client = Client(cluster)
-   >>> df = gen_ts(ncols=100)
+   from magi.core import forecast
+   from magi.plotting import fc_plot, acc_plot
+   from magi.utils import gen_ts
+   from magi.accuracy import accuracy
+   from dask.distributed import Client, LocalCluster
+   import dask
+   cluster = LocalCluster()
+   client = Client(cluster)
+   df = gen_ts(ncols=100)
    
 cleaning and forecasting for 100 series in parallel, then calculate and plot accuracy metrics by series
    
 .. code-block:: python
 
-   >>> fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
-   >>> forecast_df = fc_obj.tsclean().R(model='auto.arima(rdata,D=1,stationary=TRUE)',fitted=True)
-   >>> acc_df = accuracy(df,forecast_df,separate_series=True)
-   >>> acc_plot(acc_df)
+   fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
+   forecast_df = fc_obj.tsclean().R(model='auto.arima(rdata,D=1,stationary=TRUE)',fitted=True)
+   acc_df = accuracy(df,forecast_df,separate_series=True)
+   acc_plot(acc_df)
 
 Use Cases
 ============
