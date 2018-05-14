@@ -1,6 +1,15 @@
 Basic Usage
 ===========
 
+Imports
+---------------------
+.. code-block:: python
+
+   >>> from magi.core import forecast
+   >>> from magi.plotting import fc_plot, acc_plot
+   >>> from magi.utils import gen_ts
+   >>> from magi.accuracy import accuracy
+
 Single series R model
 ---------------------
 Input format should be a series with datetime index 
@@ -43,7 +52,6 @@ Input format should be a dataframe of series with datetime index with datetime i
    >>> import dask
    >>> cluster = LocalCluster()
    >>> client = Client(cluster)
-   >>> from magi import *
    >>> df = gen_ts()
    >>> fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
    >>> forecast_df = fc_obj.R(model='thetaf',fitted=True)

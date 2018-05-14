@@ -87,6 +87,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imports">Imports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#single-series-r-model">Single series R model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plot-single-series-accuracy">Plot single series accuracy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#calculate-accuracy-measures-single-series">Calculate accuracy measures single series</a></li>
@@ -164,6 +165,15 @@
             
   <div class="section" id="basic-usage">
 <h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi.core</span> <span class="kn">import</span> <span class="n">forecast</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi.plotting</span> <span class="kn">import</span> <span class="n">fc_plot</span><span class="p">,</span> <span class="n">acc_plot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi.utils</span> <span class="kn">import</span> <span class="n">gen_ts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi.accuracy</span> <span class="kn">import</span> <span class="n">accuracy</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="single-series-r-model">
 <h2>Single series R model<a class="headerlink" href="#single-series-r-model" title="Permalink to this headline">¶</a></h2>
 <p>Input format should be a series with datetime index</p>
@@ -199,7 +209,6 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCluster</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">forecast_df</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;thetaf&#39;</span><span class="p">,</span><span class="n">fitted</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>

@@ -11,13 +11,22 @@ pip
 
    $ pip install magi
    
+
+Imports
+---------------------
+.. code-block:: python
+
+   >>> from magi.core import forecast
+   >>> from magi.plotting import fc_plot, acc_plot
+   >>> from magi.utils import gen_ts
+   >>> from magi.accuracy import accuracy
+
 Single series R model
 ---------------------
 Input format should be a series with datetime index
    
 .. code-block:: python
 
-   >>> from magi import *
    >>> df = gen_ts()
    >>> fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
    >>> forecast_dic = fc_obj.R(model='auto.arima(rdata,D=1,stationary=TRUE)')
@@ -32,7 +41,6 @@ Input format should be a dataframe of series with datetime index with datetime i
    >>> import dask
    >>> cluster = LocalCluster()
    >>> client = Client(cluster)
-   >>> from magi import *
    >>> df = gen_ts()
    >>> fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
    >>> forecast_df = fc_obj.R(model='thetaf',fit_pred=True)
@@ -42,7 +50,6 @@ Single Series Prophet model
    
 .. code-block:: python
 
-   >>> from magi import *
    >>> df = gen_ts()
    >>> fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
    >>> forecast_dic = fc_obj.prophet(changepoint_prior_scale=.25)
@@ -59,7 +66,6 @@ Returns resulting residuals as dataframe
    >>> import dask
    >>> cluster = LocalCluster()
    >>> client = Client(cluster)
-   >>> from magi import *
    >>> df = gen_ts()
    >>> fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
    >>> forecast_df = fc_obj.tsclean().prophet(changepoint_prior_scale=.25,residuals=True)
