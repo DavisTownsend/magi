@@ -1,5 +1,4 @@
 FROM continuumio/anaconda3
-ADD https://raw.githubusercontent.com/DavisTownsend/Cryfolio/master/requirements.txt /tmp/
 RUN mkdir opt/notebooks
 #installs gcc for C++ compiled libraries
 RUN apt-get update && apt-get install -y gcc unixodbc-dev
