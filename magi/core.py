@@ -151,7 +151,7 @@ class forecast(object):
         
     def prophet(self,
                 changepoint_prior_scale=.35,
-                fit_pred=True,
+                fit_pred=False,
                 actual_pred=False,
                 pred=False,
                 fit=False,
@@ -257,7 +257,7 @@ class forecast(object):
     
     def prophet_dataframe(self,
                     time_series=None,
-                    fit_pred = True,
+                    fit_pred = False,
                     actual_pred=False,
                     pred=False,
                     fit=False,
@@ -304,7 +304,7 @@ class forecast(object):
     
     def R(self,
           model,
-          fit_pred=True,
+          fit_pred=False,
           actual_pred=False,
           pred=False,
           fit=False,
@@ -466,7 +466,7 @@ class forecast(object):
     
     def R_dataframe(self,
                     model,
-                    fit_pred = True,
+                    fit_pred = False,
                     actual_pred=False,
                     pred=False,
                     fit=False,
