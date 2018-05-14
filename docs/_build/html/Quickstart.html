@@ -171,40 +171,40 @@
 </div>
 <div class="section" id="imports">
 <h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi.core</span> <span class="kn">import</span> <span class="n">forecast</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi.plotting</span> <span class="kn">import</span> <span class="n">fc_plot</span><span class="p">,</span> <span class="n">acc_plot</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi.utils</span> <span class="kn">import</span> <span class="n">gen_ts</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi.accuracy</span> <span class="kn">import</span> <span class="n">accuracy</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">magi.core</span> <span class="kn">import</span> <span class="n">forecast</span>
+<span class="kn">from</span> <span class="nn">magi.plotting</span> <span class="kn">import</span> <span class="n">fc_plot</span><span class="p">,</span> <span class="n">acc_plot</span>
+<span class="kn">from</span> <span class="nn">magi.utils</span> <span class="kn">import</span> <span class="n">gen_ts</span>
+<span class="kn">from</span> <span class="nn">magi.accuracy</span> <span class="kn">import</span> <span class="n">accuracy</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="single-series-r-model">
 <h2>Single series R model<a class="headerlink" href="#single-series-r-model" title="Permalink to this headline">¶</a></h2>
 <p>Input format should be a series with datetime index</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ts2&#39;</span><span class="p">],</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">forecast_dic</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;auto.arima(rdata,D=1,stationary=TRUE)&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
+<span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ts2&#39;</span><span class="p">],</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">forecast_dic</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;auto.arima(rdata,D=1,stationary=TRUE)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="multiple-series-r-model-in-parallel">
 <h2>Multiple Series R model in parallel<a class="headerlink" href="#multiple-series-r-model-in-parallel" title="Permalink to this headline">¶</a></h2>
 <p>Input format should be a dataframe of series with datetime index with datetime index, returning fitted and predicted values in a dataframe</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">LocalCluster</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCluster</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">forecast_df</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;thetaf&#39;</span><span class="p">,</span><span class="n">fit_pred</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">LocalCluster</span>
+<span class="kn">import</span> <span class="nn">dask</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCluster</span><span class="p">()</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
+<span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">forecast_df</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;thetaf&#39;</span><span class="p">,</span><span class="n">fit_pred</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="single-series-prophet-model">
 <h2>Single Series Prophet model<a class="headerlink" href="#single-series-prophet-model" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ts2&#39;</span><span class="p">],</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">forecast_dic</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">prophet</span><span class="p">(</span><span class="n">changepoint_prior_scale</span><span class="o">=.</span><span class="mi">25</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
+<span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ts2&#39;</span><span class="p">],</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">forecast_dic</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">prophet</span><span class="p">(</span><span class="n">changepoint_prior_scale</span><span class="o">=.</span><span class="mi">25</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -212,13 +212,13 @@
 <h2>Multiple Series Prophet model in parallel<a class="headerlink" href="#multiple-series-prophet-model-in-parallel" title="Permalink to this headline">¶</a></h2>
 <p>This exampe also shows calling cleaning ts function which removes outliers and linearly interpolates missing values.
 Returns resulting residuals as dataframe</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">LocalCluster</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCluster</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">forecast_df</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">tsclean</span><span class="p">()</span><span class="o">.</span><span class="n">prophet</span><span class="p">(</span><span class="n">changepoint_prior_scale</span><span class="o">=.</span><span class="mi">25</span><span class="p">,</span><span class="n">residuals</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">LocalCluster</span>
+<span class="kn">import</span> <span class="nn">dask</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCluster</span><span class="p">()</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
+<span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">forecast_df</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">tsclean</span><span class="p">()</span><span class="o">.</span><span class="n">prophet</span><span class="p">(</span><span class="n">changepoint_prior_scale</span><span class="o">=.</span><span class="mi">25</span><span class="p">,</span><span class="n">residuals</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
