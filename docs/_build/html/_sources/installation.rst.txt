@@ -4,7 +4,7 @@ Installation
 ``magi`` 
 
 Dependencies
------
+------------
 
 - Dask / Dask Distributed
 - rpy2
@@ -12,7 +12,7 @@ Dependencies
 - plotly
 - cufflinks
 
-- In R, you need the forecast package v6.3 or later to be installed if you want to use R models from the forecast package
+- In R, you need the forecast package v8.3 or later to be installed if you want to use R models from the forecast package
 
 
 pip

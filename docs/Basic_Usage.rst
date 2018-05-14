@@ -1,6 +1,10 @@
-Single Series using R model, input format should be a series with datetime index
----
-   
+Basic Usage
+===========
+
+Single series R model
+---------------------
+Input format should be a series with datetime index 
+
 .. code-block:: python
 
    >>> from magi import *
@@ -8,30 +12,31 @@ Single Series using R model, input format should be a series with datetime index
    >>> fc_obj = forecast(time_series=df['ts2'],forecast_periods=18,frequency=12)
    >>> forecast_dic = fc_obj.R(model='auto.arima(rdata,D=1,stationary=TRUE)')
    
-plot single series accuracy
----
+Plot single series accuracy
+---------------------------
    
 .. code-block:: python
 
    >>> fc_plot(forecast_dic)
    
 Calculate accuracy measures single series
----
+-----------------------------------------
    
 .. code-block:: python
 
    >>> acc_dict = accuracy(forecast_dic)
    
 Plot accuracy measures single series
----
+------------------------------------
    
 .. code-block:: python
 
    >>> acc_plot(acc_dict)
    
-Multiple Series using R models in parallel, input format should be a dataframe of series with datetime index with datetime index, returning fitted and predicted values in a dataframe
----
-   
+Multiple Series R model in parallel
+-----------------------------------
+Input format should be a dataframe of series with datetime index with datetime index, returning fitted and predicted values in a dataframe
+
 .. code-block:: python
 
    >>> from dask.distributed import Client, LocalCluster
@@ -43,29 +48,29 @@ Multiple Series using R models in parallel, input format should be a dataframe o
    >>> fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
    >>> forecast_df = fc_obj.R(model='thetaf',fitted=True)
 
-plot resulting dataframe of series   
----
+Plot multiple series results   
+----------------------------
    
 .. code-block:: python
 
    >>> fc_plot(forecast_df)
    
-Calculate accuracy of fitted values to original df over all series
----
+Calculate overall accuracy measures multiple series
+---------------------------------------------------
    
 .. code-block:: python
 
    >>> acc_dict = accuracy(df,forecast_df)
    
-Calculate accuracy of fitted values to original df for each series separately
----
+Calculate accuracy measures per series
+--------------------------------------
    
 .. code-block:: python
 
    >>> acc_df = accuracy(df,forecast_df,separate_series=True)
    
-plot accuracy measures for each series
----
+Plot accuracy measures by series
+--------------------------------
    
 .. code-block:: python
 

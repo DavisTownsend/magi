@@ -4,7 +4,7 @@ Installation
 ``magi`` 
 
 Dependencies
------
+------------
 
 - Dask / Dask Distributed
 - rpy2

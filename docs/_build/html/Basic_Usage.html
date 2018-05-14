@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Quickstart &mdash; magi 0.0.11 documentation</title>
+  <title>Basic Usage &mdash; magi 0.0.11 documentation</title>
   
 
   
@@ -29,8 +29,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation" href="Installation.html" />
-    <link rel="prev" title="Welcome to magi’s documentation!" href="index.html" /> 
+    <link rel="prev" title="Installation" href="Installation.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -85,16 +84,20 @@
             
               <p class="caption"><span class="caption-text">User Documentation:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#pip">pip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basic Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#single-series-r-model">Single series R model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plot-single-series-accuracy">Plot single series accuracy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#calculate-accuracy-measures-single-series">Calculate accuracy measures single series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plot-accuracy-measures-single-series">Plot accuracy measures single series</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#multiple-series-r-model-in-parallel">Multiple Series R model in parallel</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#single-series-prophet-model">Single Series Prophet model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#multiple-series-prophet-model-in-parallel">Multiple Series Prophet model in parallel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plot-multiple-series-results">Plot multiple series results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#calculate-overall-accuracy-measures-multiple-series">Calculate overall accuracy measures multiple series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#calculate-accuracy-measures-per-series">Calculate accuracy measures per series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plot-accuracy-measures-by-series">Plot accuracy measures by series</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Basic_Usage.html">Basic Usage</a></li>
 </ul>
 
             
@@ -140,13 +143,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Quickstart</li>
+      <li>Basic Usage</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/Quickstart.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Basic_Usage.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -159,15 +162,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="quickstart">
-<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal"><span class="pre">magi</span></code></p>
-<div class="section" id="pip">
-<h2>pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install magi
-</pre></div>
-</div>
-</div>
+  <div class="section" id="basic-usage">
+<h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="single-series-r-model">
 <h2>Single series R model<a class="headerlink" href="#single-series-r-model" title="Permalink to this headline">¶</a></h2>
 <p>Input format should be a series with datetime index</p>
@@ -175,6 +171,24 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ts2&#39;</span><span class="p">],</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">forecast_dic</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;auto.arima(rdata,D=1,stationary=TRUE)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plot-single-series-accuracy">
+<h2>Plot single series accuracy<a class="headerlink" href="#plot-single-series-accuracy" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fc_plot</span><span class="p">(</span><span class="n">forecast_dic</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="calculate-accuracy-measures-single-series">
+<h2>Calculate accuracy measures single series<a class="headerlink" href="#calculate-accuracy-measures-single-series" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acc_dict</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">forecast_dic</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plot-accuracy-measures-single-series">
+<h2>Plot accuracy measures single series<a class="headerlink" href="#plot-accuracy-measures-single-series" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acc_plot</span><span class="p">(</span><span class="n">acc_dict</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -188,31 +202,31 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">forecast_df</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;thetaf&#39;</span><span class="p">,</span><span class="n">fit_pred</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">forecast_df</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;thetaf&#39;</span><span class="p">,</span><span class="n">fitted</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="single-series-prophet-model">
-<h2>Single Series Prophet model<a class="headerlink" href="#single-series-prophet-model" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ts2&#39;</span><span class="p">],</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">forecast_dic</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">prophet</span><span class="p">(</span><span class="n">changepoint_prior_scale</span><span class="o">=.</span><span class="mi">25</span><span class="p">)</span>
+<div class="section" id="plot-multiple-series-results">
+<h2>Plot multiple series results<a class="headerlink" href="#plot-multiple-series-results" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fc_plot</span><span class="p">(</span><span class="n">forecast_df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="multiple-series-prophet-model-in-parallel">
-<h2>Multiple Series Prophet model in parallel<a class="headerlink" href="#multiple-series-prophet-model-in-parallel" title="Permalink to this headline">¶</a></h2>
-<p>This exampe also shows calling cleaning ts function which removes outliers and linearly interpolates missing values.
-Returns resulting residuals as dataframe</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">LocalCluster</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCluster</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">magi</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">gen_ts</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fc_obj</span> <span class="o">=</span> <span class="n">forecast</span><span class="p">(</span><span class="n">time_series</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">forecast_periods</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span><span class="n">frequency</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">forecast_df</span> <span class="o">=</span> <span class="n">fc_obj</span><span class="o">.</span><span class="n">tsclean</span><span class="p">()</span><span class="o">.</span><span class="n">prophet</span><span class="p">(</span><span class="n">changepoint_prior_scale</span><span class="o">=.</span><span class="mi">25</span><span class="p">,</span><span class="n">residuals</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="section" id="calculate-overall-accuracy-measures-multiple-series">
+<h2>Calculate overall accuracy measures multiple series<a class="headerlink" href="#calculate-overall-accuracy-measures-multiple-series" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acc_dict</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">forecast_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="calculate-accuracy-measures-per-series">
+<h2>Calculate accuracy measures per series<a class="headerlink" href="#calculate-accuracy-measures-per-series" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acc_df</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">forecast_df</span><span class="p">,</span><span class="n">separate_series</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plot-accuracy-measures-by-series">
+<h2>Plot accuracy measures by series<a class="headerlink" href="#plot-accuracy-measures-by-series" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">acc_plot</span><span class="p">(</span><span class="n">acc_df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -226,10 +240,8 @@ Returns resulting residuals as dataframe</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="index.html" class="btn btn-neutral" title="Welcome to magi’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Installation.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

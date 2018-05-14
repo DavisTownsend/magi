@@ -12,7 +12,7 @@ Welcome to magi's documentation!
    
    Quickstart
    Installation
-   Basic Usage
+   Basic_Usage
 
 
 .. toctree::
