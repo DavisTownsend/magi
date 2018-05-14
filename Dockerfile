@@ -15,6 +15,8 @@ RUN conda install pystan
 RUN conda install fbprophet
 RUN conda install plotly
 RUN conda install cufflinks
+RUN conda install numpy
+RUN conda install pandas
 RUN conda install dask
 RUN conda install dask distributed
 #install requirements file
