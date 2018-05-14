@@ -54,7 +54,7 @@ Input format should be a dataframe of series with datetime index with datetime i
    >>> client = Client(cluster)
    >>> df = gen_ts()
    >>> fc_obj = forecast(time_series=df,forecast_periods=18,frequency=12)
-   >>> forecast_df = fc_obj.R(model='thetaf',fitted=True)
+   >>> forecast_df = fc_obj.R(model='thetaf',fit=True)
 
 Plot multiple series results   
 ----------------------------
