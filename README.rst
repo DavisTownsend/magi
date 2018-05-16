@@ -97,3 +97,8 @@ Documentation is hosted on `Read the Docs <http://magi-docs.readthedocs.io/en/la
 Disclaimer
 ============
 This package is still very early in development and should not be relied upon in production. Everything is still subject to change
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/DavisTownsend/magi/badge.svg?style=beer-square)](https://beerpay.io/DavisTownsend/magi)  [![Beerpay](https://beerpay.io/DavisTownsend/magi/make-wish.svg?style=flat-square)](https://beerpay.io/DavisTownsend/magi?focus=wish)
