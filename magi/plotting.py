@@ -156,7 +156,7 @@ def acc_plot(obj,title='',xTitle='Date',yTitle='',mode='lines+markers',tablewidt
         elif isinstance(obj, pd.core.frame.DataFrame):
             #return cufflinks figure, normalize error measures, then plot them without a y axis
             normalized_df=obj.T.apply(lambda x: x/abs(x).max(), axis=0)
-            fig = normalized_df.T.iplot(kind='scatter',mode=mode,asFigure=True)
+            fig = normalized_df.T.iplot(kind='scatter',title=title,xTitle=xTitle,yTitle=yTitle,mode=mode,asFigure=True)
             fig['layout']['yaxis1']['visible'] = False
             for error_measure in fig['data']:
                 #get correct text values from original dataframe and round values to 4 decimals
