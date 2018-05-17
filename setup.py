@@ -21,7 +21,7 @@ setup(
       name=sphinx_doc.__name__,
       version=sphinx_doc.__version__,
       description='high level wrapper for parallel univariate time series forecasting'.strip(),
-      long_description='\n'.join([read('README.rst'), read('CHANGELOG.rst')]),
+      long_description='\n'.join(read('README.rst')),
       url='http://github.com/DavisTownsend/forecast',
       author= sphinx_doc.__author__,
       author_email='dtownsend@ea.com',
