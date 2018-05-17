@@ -122,7 +122,7 @@ def fc_plot(obj,title='',xTitle='Date',yTitle='',asFigure=False):
         return fig
     return iplot(fig, show_link=False)
     
-def acc_plot(obj,title='',xTitle='Date',yTitle='',mode='lines+markers',tablewidth=350,asFigure=False):
+def acc_plot(obj,title='',xTitle='',yTitle='',mode='lines+markers',tablewidth=350,asFigure=False):
     
     """ plots accuracy measures
     Args:
