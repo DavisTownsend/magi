@@ -12,16 +12,15 @@ CLASSIFIERS = [
       'Programming Language :: Python :: 3.6'
 ]
 
-def read(*pathcomponents):
-    """Read the contents of a file located relative to setup.py"""
-    with open(join(abspath(dirname(__file__)), *pathcomponents)) as thefile:
-        return thefile.read()
+with open('README.rst') as readme:
+    long_desc = readme.read()
+
 setup(
       py_modules=['sphinx_doc'],
       name=sphinx_doc.__name__,
       version=sphinx_doc.__version__,
       description='high level wrapper for parallel univariate time series forecasting'.strip(),
-      long_description='\n'.join(read('README.rst')),
+      long_description=long_desc,
       url='http://github.com/DavisTownsend/forecast',
       author= sphinx_doc.__author__,
       author_email='dtownsend@ea.com',
