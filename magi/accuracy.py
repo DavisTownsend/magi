@@ -147,3 +147,20 @@ def autocorrelation_lag_1(y_true, y_pred, lag=1):
     sum_product = np.sum((y1-np.mean(error))*(y2-np.mean(error)))
     # Normalize with var of whole series
     return sum_product / ((len(error) - lag) * np.var(error))
+
+def mase(insample, y_test, y_hat_test, freq):
+    """
+    Calculates MAsE
+    :param insample: insample data
+    :param y_test: out of sample target values
+    :param y_hat_test: predicted values
+    :param freq: data frequency
+    :return:
+    """
+    y_hat_naive = []
+    for i in range(freq, len(insample)):
+        y_hat_naive.append(insample[(i - freq)])
+
+    masep = np.mean(abs(insample[freq:] - y_hat_naive))
+
+    return np.mean(abs(y_test - y_hat_test)) / masep
