@@ -72,14 +72,14 @@ def accuracy(actual,predicted=None,separate_series=False):
 
     
     MAPE = mean_absolute_percentage_error(actual,predicted)
-    SMAPE = s_mean_absolute_percentage_error(actual,predicted)
+    SMAPE = smape(actual,predicted)
     ME = mean_error(actual,predicted)
     MAE = mean_absolute_error(actual,predicted)
     MSE = mean_squared_error(actual,predicted)
     RMSE = root_mean_squared_error(actual,predicted)
     SSE = sum_of_squared_error(actual,predicted)
     ThielsU = theil_u_statistic(actual,predicted)
-    ACF1 = autocorrelation_lag_1(actual,predicted)
+    ACF1 = acf1(actual,predicted)
         
     accuracy_dict = {'MAPE':MAPE,'SMAPE':SMAPE,'ME':ME,'MAE':MAE,'MSE':MSE,'RMSE':RMSE,'ThielsU':ThielsU,'ACF1':ACF1}
     if separate_series:
@@ -88,7 +88,6 @@ def accuracy(actual,predicted=None,separate_series=False):
     return accuracy_dict
 
 
-# ----------------------------Scale independent metrics------------------------
 
 # The mean absolute percentage error (MAPE), is a measure of prediction
 # accuracy of a forecasting method in statistics. The 'min_val' variable is
@@ -101,7 +100,7 @@ def mean_absolute_percentage_error(y_true, y_pred, min_val=1):
 
 # SMAPE is an alternative for MAPE when there are zeros in the testing data. It
 # scales the absolute percentage by the sum of forecast and observed values
-def s_mean_absolute_percentage_error(y_true, y_pred):
+def smape(y_true, y_pred):
     return (np.mean(2.0 * np.abs(a - b) / (np.abs(a) + np.abs(b))).item())*100
 
 #returns average error
@@ -111,8 +110,6 @@ def mean_error(y_true,y_pred):
 # MAE is used to measure how close the forecast is to observed value
 def mean_absolute_error(y_true, y_pred):
     return np.mean(abs(y_true - y_pred))
-
-# -----------------------------Scale dependent metrics-------------------------
 
 
 # In statistics, the mean squared error (MSE) of an estimator measures the
@@ -139,23 +136,37 @@ def sum_of_squared_error(y_true, y_pred):
 def theil_u_statistic(y_true, y_pred):
     return np.sqrt(np.sum((y_pred - y_true)**2)/np.sum(y_true**2))
 
-def autocorrelation_lag_1(y_true, y_pred, lag=1):
+#AutoCorrelation at Lag1 of residuals
+def acf1(y_true, y_pred, lag=1):
+    """calculates Mean Absolute Scaled Error    
+    Args:
+        y_true: actual y values
+        y_pred: predicted y values
+        lag: lag    
+        
+    Returns:
+        ACF: autocorrelation function for residuals at specified lag
+    """
     error = y_true - y_pred
-    # Slice the relevant subseries based on the lag
-    y1 = error[:(len(error)-lag)]
-    y2 = error[lag:]
-    # Subtract the mean of the whole series x to calculate Cov
-    sum_product = np.sum((y1-np.mean(error))*(y2-np.mean(error)))
-    # Normalize with var of whole series
-    return sum_product / ((len(error) - lag) * np.var(error))
+    m = np.mean(error)
+    s1 = 0
+    for i in range(lag, len(error)):
+        s1 = s1 + ((error[i] - m) * (error[i - lag] - m))
 
-def mase(insample, y_test, y_hat_test, freq):
+    s2 = 0
+    for i in range(0, len(error)):
+        s2 = s2 + ((error[i] - m) ** 2)
+
+    return float(s1 / s2)
+
+# Mean Absolute Scaled Error
+def mase(insample, y_true, y_pred, freq):
     
     """calculates Mean Absolute Scaled Error    
     Args:
         insample: insample data
-        y_test: out of sample target values
-        y_hat_test: predicted values
+        y_true: out of sample target values
+        y_pred: predicted values
         freq: data frequency
         
     Returns:
@@ -168,4 +179,4 @@ def mase(insample, y_test, y_hat_test, freq):
 
     masep = np.mean(abs(insample[freq:] - y_hat_naive))
 
-    return np.mean(abs(y_test - y_hat_test)) / masep
+    return np.mean(abs(y_true - y_pred)) / masep
