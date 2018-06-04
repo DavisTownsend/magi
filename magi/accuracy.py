@@ -5,6 +5,9 @@ import dask
 def accuracy(actual,predicted=None,separate_series=False):
     
     """returns accuracy measures
+    
+    prints accuracy measures for forecasting and returns them as a dictionary
+    
     Args:
         actual: actual values as numpy array or time series
         predicted: predicted values as numpy array or time series
@@ -14,8 +17,6 @@ def accuracy(actual,predicted=None,separate_series=False):
     Returns:
         accuracy_dict: dictionary of accuracy measures
         
-    
-    prints accuracy measures for forecasting and returns them as a dictionary
     """
     #handle different incoming data types
     try:
@@ -149,14 +150,18 @@ def autocorrelation_lag_1(y_true, y_pred, lag=1):
     return sum_product / ((len(error) - lag) * np.var(error))
 
 def mase(insample, y_test, y_hat_test, freq):
+    
+    """calculates Mean Absolute Scaled Error    
+    Args:
+        insample: insample data
+        y_test: out of sample target values
+        y_hat_test: predicted values
+        freq: data frequency
+        
+    Returns:
+        MASE: MASE accuracy scoe
     """
-    Calculates MAsE
-    :param insample: insample data
-    :param y_test: out of sample target values
-    :param y_hat_test: predicted values
-    :param freq: data frequency
-    :return:
-    """
+
     y_hat_naive = []
     for i in range(freq, len(insample)):
         y_hat_naive.append(insample[(i - freq)])
