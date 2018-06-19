@@ -101,7 +101,7 @@ def mean_absolute_percentage_error(y_true, y_pred, min_val=1):
 # SMAPE is an alternative for MAPE when there are zeros in the testing data. It
 # scales the absolute percentage by the sum of forecast and observed values
 def smape(y_true, y_pred):
-    return (np.mean(2.0 * np.abs(a - b) / (np.abs(a) + np.abs(b))).item())*100
+    return (np.mean(2.0 * np.abs(y_true - y_pred) / (np.abs(y_true) + np.abs(y_pred))).item())*100
 
 #returns average error
 def mean_error(y_true,y_pred):
