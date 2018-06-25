@@ -19,9 +19,6 @@
 .. image:: https://badges.gitter.im/magi-gitter/Lobby.svg
    :alt: Join the chat at https://gitter.im/magi-gitter/Lobby
    :target: https://gitter.im/magi-gitter/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-   
-.. image:: https://beerpay.io/DavisTownsend/magi/make-wish.svg?style=plastic
-    :target: https://beerpay.io/DavisTownsend/magi
 
 
 Overview
